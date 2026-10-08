@@ -34,8 +34,13 @@ from app.core.database import SessionLocal
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Ensure parent directory exists before table creation
+    if settings.DATABASE_PATH and settings.DATABASE_PATH.parent:
+        settings.DATABASE_PATH.parent.mkdir(parents=True, exist_ok=True)
+
     # Ensure tables exist on startup
     Base.metadata.create_all(bind=engine)
+
     # Check if empty, and auto-seed if needed for seamless dev experience
     db = SessionLocal()
     try:
