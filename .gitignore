@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+*/node_modules/
+.pnp
+.pnp.*
+
+# Next.js build outputs
+.next/
+*/.next/
+out/
+*/out/
+build/
+*/build/
+*.tsbuildinfo
+
+# Python bytecode & virtual environments
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+*/.venv/
+env/
+*/env/
+venv/
+*/venv/
+.pytest_cache/
+*/.pytest_cache/
+.coverage
+htmlcov/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+backend/data/*.db
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# OS & Editor
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
