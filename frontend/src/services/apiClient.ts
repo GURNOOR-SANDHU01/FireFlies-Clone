@@ -2,21 +2,30 @@
  * File: src/services/apiClient.ts
  *
  * Purpose:
- * Core HTTP client utilizing native browser/Next.js fetch for REST communication.
+ * Centralized HTTP client utilizing native browser/Next.js fetch for REST communication.
  *
  * Responsibilities:
- * - Configure base API endpoint (http://127.0.0.1:8000/api/v1).
+ * - Configure base API endpoint from process.env.NEXT_PUBLIC_API_BASE_URL (production) with fallback to http://127.0.0.1:8000/api/v1 (local development).
+ * - Normalize base URL by removing any trailing slashes to guarantee clean endpoint concatenation.
  * - Provide type-safe wrappers for GET, POST, PUT, PATCH, and DELETE requests.
- * - Append default headers (Content-Type: application/json).
+ * - Append default headers (Content-Type: application/json, Accept: application/json).
  * - Standardize error handling and HTTP response unpacking across 2xx, 4xx, 5xx, and network errors.
  *
  * This file does NOT:
+ * - Hard-code deployment URLs into individual service modules.
  * - Contain domain-specific API endpoint logic.
  * - Store application or session state.
  * - Render UI or error toasts directly.
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
+const rawBaseUrl =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  'http://127.0.0.1:8000/api/v1';
+
+// Strip any trailing slash to prevent double-slash path concatenation issues (e.g. /api/v1//meetings)
+const BASE_URL = rawBaseUrl.replace(/\/+$/, '');
+
 
 export class ApiError extends Error {
   status: number;
